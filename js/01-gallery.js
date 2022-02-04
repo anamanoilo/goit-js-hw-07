@@ -26,6 +26,7 @@ const previewMarkup = galleryItems
 refs.divGallery.insertAdjacentHTML("afterbegin", previewMarkup);
 
 refs.divGallery.addEventListener("click", openModal);
+let instance = null;
 
 function openModal(event) {
   event.preventDefault();
@@ -33,10 +34,17 @@ function openModal(event) {
     return;
   }
   const originalLink = event.target.dataset.source;
+  window.addEventListener("keydown", closeModalByEsc);
 
-  let instance = basicLightbox.create(`
+  instance = basicLightbox.create(`
     <img src="${originalLink}" width="800" height="600">
 `);
 
   instance.show();
+}
+
+function closeModalByEsc(e) {
+  if (e.code === "Escape") {
+    instance.close();
+  }
 }
