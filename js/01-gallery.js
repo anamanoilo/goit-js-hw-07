@@ -36,9 +36,16 @@ function openModal(event) {
   const originalLink = event.target.dataset.source;
   window.addEventListener("keydown", closeModalByEsc);
 
-  instance = basicLightbox.create(`
+  instance = basicLightbox.create(
+    `
     <img src="${originalLink}" width="800" height="600">
-`);
+`,
+    {
+      onClose: () => {
+        window.removeEventListener("keydown", closeModalByEsc);
+      },
+    }
+  );
 
   instance.show();
 }
